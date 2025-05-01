@@ -1,0 +1,117 @@
+.home-page {
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .hero {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeInUp 0.6s ease;
+  }
+  
+  .hero h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .tiles-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+  }
+  
+  .tile {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    width: 300px;
+    padding: 24px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInTile 0.6s ease;
+  }
+  
+  .tile:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  
+  .tile h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .tile p {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 16px;
+  }
+  
+  .tile-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .tile-blue {
+    background-color: #e6f0fb;
+    border-left: 6px solid #4a90e2;
+  }
+  
+  .tile-green {
+    background-color: #e9f7ef;
+    border-left: 6px solid #27ae60;
+  }
+  
+  .tile-purple {
+    background-color: #f3e9ff;
+    border-left: 6px solid #9b59b6;
+  }
+  
+  .highlight {
+    color: #4a90e2;
+  }  
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInTile {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .tiles-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  

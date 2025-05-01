@@ -1,0 +1,62 @@
+.confirmation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #eef2f3, #ffffff);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .confirmation-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    animation: fadeInUp 0.4s ease;
+  }
+  
+  .confirmation-card h2 {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .confirmation-card p {
+    margin-bottom: 20px;
+    color: #666;
+  }
+  
+  .confirmation-icon {
+    width: 80px;
+    margin: 20px 0;
+  }
+  
+  .resend-button {
+    padding: 12px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .timer-message {
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

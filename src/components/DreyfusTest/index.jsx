@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import questionsData from './questionsData';
-import Chart from './Chart'; 
+import Chart from './Chart';
 import './DreyfusTestPage.css';
+import { getUserIdFromToken } from '../../actions/auth.js';
 
 const blocksOrder = ['Novice', 'AdvancedBeginner', 'Competent', 'Proficient', 'Expert'];
 
@@ -29,7 +30,7 @@ const DreyfusTestPage = () => {
     setCurrentBlockIndex(current => current - 1);
   };
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     const scoresByBlock = {};
     let total = 0;
 
@@ -46,6 +47,27 @@ const DreyfusTestPage = () => {
       });
       scoresByBlock[block] = sum;
     });
+
+    const userId = getUserIdFromToken();
+
+    const payload = {
+      userId,
+      dreyfusScore: total,
+      careerTraits: []
+    };
+
+    try {
+      await fetch("https://localhost:7100/test-results/dreyfus", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (error) {
+      console.error('Error saving Dreyfus result:', error);
+    }
 
     const chartPoints = Object.entries(scoresByBlock).map(([block, score]) => ({
       Block: block,

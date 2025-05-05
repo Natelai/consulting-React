@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import questionsData from "./questionsData";
+import { getUserIdFromToken } from '../../actions/auth.js';
 
 const CareerTestPage = () => {
   const [answers, setAnswers] = useState({});
@@ -9,7 +10,7 @@ const CareerTestPage = () => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const traitScores = {};
     const traitCounts = {};
 
@@ -26,6 +27,30 @@ const CareerTestPage = () => {
     const traitAverages = {};
     for (const trait in traitScores) {
       traitAverages[trait] = traitScores[trait] / traitCounts[trait];
+    }
+
+    const userId = getUserIdFromToken();
+
+    const payload = {
+      userId,
+      dreyfusScore: 0,
+      careerTraits: Object.entries(traitAverages).map(([trait, score]) => ({
+        trait,
+        score: Math.round(score)
+      }))
+    };
+
+    try {
+      await fetch(`https://localhost:7100/test-results/career`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify(payload)
+      });
+    } catch (error) {
+      console.error('Error saving career traits:', error);
     }
 
     setResult(traitAverages);

@@ -36,7 +36,7 @@ const CareerTestPage = () => {
       dreyfusScore: 0,
       careerTraits: Object.entries(traitAverages).map(([trait, score]) => ({
         trait,
-        score: Math.round(score)
+        score: parseFloat(score.toFixed(2))
       }))
     };
 

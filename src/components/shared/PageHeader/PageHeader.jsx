@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faBars } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import './PageHeader.css';
+import logo from '../../../logo.png';
 
 function PageHeader({ isAuthenticated, onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,8 +21,8 @@ function PageHeader({ isAuthenticated, onLogout }) {
   return (
     <header className="page-header">
       <div className="left-section">
-        <img src="/logo.png" alt="Logo" className="logo" />
-        <span className="title">Consulting Platform</span>
+        <img src={logo} alt="Logo" className="logo" onClick={() => handleButtonClick('')} />
+        <span className="title" onClick={() => handleButtonClick('')}>Consulting Platform</span>
       </div>
 
       <div className="right-section">

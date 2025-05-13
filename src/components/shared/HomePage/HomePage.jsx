@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../AuthContext'; 
+import { useAuth } from '../../../AuthContext';
 import './HomePage.css';
 
 const HomePage = () => {
@@ -27,7 +27,7 @@ const HomePage = () => {
 
       <section className="tiles-section">
         <div className="tile tile-blue">
-          <h2>Тест Дрейфуса</h2>
+          <h2>Тест Дрейфус</h2>
           <p>Оцініть рівень професіоналізму за моделлю братів Дрейфус.</p>
           <button className="tile-button" onClick={() => handleTileClick('/drayfus')}>Перейти</button>
         </div>

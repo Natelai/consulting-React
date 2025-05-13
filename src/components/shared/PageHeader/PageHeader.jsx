@@ -7,6 +7,7 @@ import logo from '../../../logo.png';
 
 function PageHeader({ isAuthenticated, onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('drayfus');
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -15,7 +16,13 @@ function PageHeader({ isAuthenticated, onLogout }) {
 
   const handleButtonClick = (destination) => {
     navigate(`/${destination}`);
-    setMenuOpen(false); // закриваємо меню після переходу
+    setMenuOpen(false);
+  };
+
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+    navigate(`/${tabName}`);
+    setMenuOpen(false);
   };
 
   return (
@@ -25,12 +32,56 @@ function PageHeader({ isAuthenticated, onLogout }) {
         <span className="title" onClick={() => handleButtonClick('')}>Consulting Platform</span>
       </div>
 
+      {/* Вкладки для десктопу */}
+      <div className="tabs">
+        <button
+          className={`tab ${activeTab === 'drayfus' ? 'active' : ''}`}
+          onClick={() => handleTabClick('drayfus')}
+        >
+          Тест Дрейфус
+        </button>
+        <button
+          className={`tab ${activeTab === 'professional-characteristics' ? 'active' : ''}`}
+          onClick={() => handleTabClick('professional-characteristics')}
+        >
+          Тест професійних характеристик
+        </button>
+        <button
+          className={`tab ${activeTab === 'recommendations' ? 'active' : ''}`}
+          onClick={() => handleTabClick('recommendations')}
+        >
+          Система рекомендацій
+        </button>
+      </div>
+
       <div className="right-section">
         <div className="menu-icon" onClick={toggleMenu}>
           <FontAwesomeIcon icon={faBars} />
         </div>
 
         <div className={`nav-items ${menuOpen ? 'open' : ''}`}>
+          {/* Вкладки для мобільного меню */}
+          <div className="tabs-mobile">
+            <button
+              className={`tab ${activeTab === 'drayfus' ? 'active' : ''}`}
+              onClick={() => handleTabClick('drayfus')}
+            >
+              Тест Дрейфус
+            </button>
+            <button
+              className={`tab ${activeTab === 'professional-characteristics' ? 'active' : ''}`}
+              onClick={() => handleTabClick('professional-characteristics')}
+            >
+              Тест професійних характеристик
+            </button>
+            <button
+              className={`tab ${activeTab === 'recommendations' ? 'active' : ''}`}
+              onClick={() => handleTabClick('recommendations')}
+            >
+              Система рекомендацій
+            </button>
+          </div>
+
           {isAuthenticated ? (
             <>
               <FontAwesomeIcon icon={faUser} className="icon" title="Profile" />

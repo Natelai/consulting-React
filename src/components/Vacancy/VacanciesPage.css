@@ -1,0 +1,135 @@
+.vacancies-container {
+    padding: 2rem;
+    text-align: center;
+}
+
+.vacancy-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.vacancy-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.vacancy-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-align: center;
+    width: 80%;
+}
+
+.vacancy-card:hover {
+    transform: scale(1.01);
+}
+
+.vacancy-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.match-percentage {
+    background-color: #81C784;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.short-desc {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #444;
+}
+
+.skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.skill {
+    background-color: #e0f2f1;
+    color: #00796b;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.close-button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #333;
+}
+
+.match-percentage {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.vacancy-top-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.expertise-badge {
+    color: white;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Тип вакансії (в майбутньому) */
+.type-badge {
+    color: white;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 0.85em;
+    font-weight: bold;
+    background-color: #607d8b;
+}

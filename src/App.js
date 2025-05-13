@@ -11,6 +11,7 @@ import ResetPasswordPage from './components/Public/ResetPassword/ResetPasswordPa
 import ResetRequestPage from './components/Public/ResetRequestPage/ResetRequestPage';
 import DreyfusTestPage from './components/DreyfusTest';
 import CareerTestPage from './components/MaxMinTest/CareerTest';
+import VacancyPage from './components/Vacancy/VacancyPage';
 import './App.css';
 
 function App() {
@@ -38,6 +39,7 @@ function MainApp() {
   <Route path="/resetRequest" element={<ResetRequestPage />} />
   <Route path="/reset" element={<ResetPasswordPage />} />
   <Route path="/professional-characteristics" element={<CareerTestPage />} />
+  <Route path="/recommendations" element={<VacancyPage/>}/>
 
   {/* Приватні сторінки */}
   <Route path="/" element={

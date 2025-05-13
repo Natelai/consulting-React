@@ -83,6 +83,7 @@
   color: #777;
   background-color: transparent;
   border-bottom: 2px solid transparent;
+  border-radius: 0%;
   cursor: pointer;
 }
 

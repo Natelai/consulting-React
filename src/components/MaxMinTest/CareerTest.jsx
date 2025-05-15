@@ -1,16 +1,26 @@
 import React, { useState } from "react";
 import questionsData from "./questionsData";
 import { getUserIdFromToken } from '../../actions/auth.js';
+import './CareerTestPage.css';
 
 const CareerTestPage = () => {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
+  const [showResults, setShowResults] = useState(false);
 
   const handleAnswerChange = (questionId, value) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
+  // Перевіряємо, чи відповіли на всі питання
+  const allAnswered = questionsData.every(q => answers[q.id] != null);
+
   const handleSubmit = async () => {
+    if (!allAnswered) {
+      // Можна додати ще повідомлення або вібрацію
+      return;
+    }
+
     const traitScores = {};
     const traitCounts = {};
 
@@ -54,13 +64,14 @@ const CareerTestPage = () => {
     }
 
     setResult(traitAverages);
+    setShowResults(true);
   };
 
   return (
     <div className="test-page">
       <h1 className="text-3xl font-bold mb-6">Тест для підбору професії</h1>
 
-      {questionsData.map((q) => (
+      {!showResults && questionsData.map((q) => (
         <div key={q.id} className="question-card">
           <p>{q.text}</p>
           <div className="options-row">
@@ -81,33 +92,54 @@ const CareerTestPage = () => {
         </div>
       ))}
 
-      <div className="navigation-buttons">
-        <button onClick={handleSubmit} className="restart-button">
-          Завершити тест і переглянути результати
-        </button>
-      </div>
+      {!showResults && (
+        <div>
+          <div>
+            {!allAnswered && (
+              <div className="incomplete-warning" style={{ marginTop: '8px', textAlign: 'center' }}>
+                Будь ласка, виберіть відповіді на всі питання перед завершенням тесту.
+              </div>
+            )}
 
-      {result && (
-        <div className="results-page">
-          <h2 className="text-2xl font-bold mb-4">Ваш профіль характеристик:</h2>
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr>
-                <th className="border-b p-2">Характеристика</th>
-                <th className="border-b p-2">Оцінка</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(result).map(([trait, score], idx) => (
-                <tr key={idx}>
-                  <td className="border-b p-2">{trait}</td>
-                  <td className="border-b p-2">{score.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          </div>
+          <div className="navigation-buttons" style={{ position: 'relative' }}>
+            <button
+              onClick={handleSubmit}
+              className="restart-button"
+              disabled={!allAnswered}
+            >
+              Завершити тест і переглянути результати
+            </button>
+
+          </div>
         </div>
       )}
+
+      {showResults && result && (
+        <div className="results-page">
+          <h2 className="results-title">Ваш профіль характеристик:</h2>
+          <div className="results-grid">
+            {Object.entries(result).map(([trait, score], idx) => {
+              const percentage = Math.round(score * 100);
+              const color = `hsl(${percentage * 1.2}, 70%, 50%)`;
+
+              return (
+                <div key={idx} className="result-card">
+                  <h3 className="trait-name">{trait}</h3>
+                  <p className="trait-score">Оцінка: <strong>{percentage}%</strong></p>
+                  <div className="progress-bar-background">
+                    <div
+                      className="progress-bar-fill"
+                      style={{ width: `${percentage}%`, backgroundColor: color }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

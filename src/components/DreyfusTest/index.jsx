@@ -6,12 +6,21 @@ import { getUserIdFromToken } from '../../actions/auth.js';
 
 const blocksOrder = ['Novice', 'AdvancedBeginner', 'Competent', 'Proficient', 'Expert'];
 
+const blockTitles = {
+  Novice: 'Новачок',
+  AdvancedBeginner: 'Твердий початківець',
+  Competent: 'Компетентний',
+  Proficient: 'Досвідчений',
+  Expert: 'Експерт'
+};
+
 const DreyfusTestPage = () => {
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [chartData, setChartData] = useState([]);
   const [overallScore, setOverallScore] = useState(0);
+  const [showIncompleteWarning, setShowIncompleteWarning] = useState(false);
 
   const currentBlock = blocksOrder[currentBlockIndex];
 
@@ -23,6 +32,11 @@ const DreyfusTestPage = () => {
   };
 
   const handleNext = () => {
+    if (!isCurrentBlockComplete()) {
+      setShowIncompleteWarning(true);
+      return;
+    }
+    setShowIncompleteWarning(false);
     setCurrentBlockIndex(current => current + 1);
   };
 
@@ -31,6 +45,11 @@ const DreyfusTestPage = () => {
   };
 
   const handleFinish = async () => {
+    if (!isCurrentBlockComplete()) {
+      setShowIncompleteWarning(true);
+      return;
+    }
+    setShowIncompleteWarning(false);
     const scoresByBlock = {};
     let total = 0;
 
@@ -79,6 +98,12 @@ const DreyfusTestPage = () => {
     setShowResults(true);
   };
 
+  React.useEffect(() => {
+    if (isCurrentBlockComplete() && showIncompleteWarning) {
+      setShowIncompleteWarning(false);
+    }
+  }, [answers, currentBlockIndex, showIncompleteWarning]);
+
   const restartTest = () => {
     setAnswers({});
     setCurrentBlockIndex(0);
@@ -95,6 +120,9 @@ const DreyfusTestPage = () => {
     'Експерт': 'Expert.png'
   };
 
+  const isCurrentBlockComplete = () => {
+    return questionsData[currentBlock].every(q => answers[q.id]);
+  };
 
   if (showResults) {
     const percentage = (overallScore / 80) * 100;
@@ -144,7 +172,7 @@ const DreyfusTestPage = () => {
         </div>
       </div>
 
-      <h2>{currentBlock}</h2>
+      <h2>{blockTitles[currentBlock]}</h2>
       {questionsData[currentBlock].map(q => (
         <div key={q.id} className="question-card fade-in">
           <p>{q.question}</p>
@@ -170,12 +198,31 @@ const DreyfusTestPage = () => {
         </div>
       ))}
 
-      <div className="navigation-buttons">
-        <button style={{ backgroundColor: 'purple' }} onClick={handlePrevious} disabled={currentBlockIndex === 0}>Назад</button>
+      {showIncompleteWarning && (
+        <div className="incomplete-warning" style={{ marginTop: '0.5rem', textAlign: 'center' }}>
+          Будь ласка, виберіть відповіді на всі питання, щоб продовжити.
+        </div>
+      )}
+
+      <div className="navigation-buttons" style={{ marginTop: '1rem' }}>
+        <button className="back-button" onClick={handlePrevious} disabled={currentBlockIndex === 0}>
+          Назад
+        </button>
+
         {currentBlockIndex === blocksOrder.length - 1 ? (
-          <button style={{ backgroundColor: 'greenyellow' }} onClick={handleFinish}>Завершити</button>
+          <button
+            className="finish-button"
+            onClick={handleFinish}
+          >
+            Завершити
+          </button>
         ) : (
-          <button style={{ backgroundColor: 'green' }} onClick={handleNext}>Далі</button>
+          <button
+            className="next-button"
+            onClick={handleNext}
+          >
+            Далі
+          </button>
         )}
       </div>
     </div>

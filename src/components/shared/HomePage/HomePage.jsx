@@ -33,8 +33,8 @@ const HomePage = () => {
         </div>
 
         <div className="tile tile-green">
-          <h2>Тест професійних характеристик</h2>
-          <p>Визначте свої сильні сторони, особистісні риси та тип професійної поведінки.</p>
+          <h2>Тест психофізіологічних характеристик</h2>
+          <p>Визначте свої сильні сторони, особистісні риси та психофізіологічні якості.</p>
           <button className="tile-button" onClick={() => handleTileClick('/professional-characteristics')}>Перейти</button>
         </div>
 

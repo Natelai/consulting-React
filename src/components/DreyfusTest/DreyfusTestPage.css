@@ -47,14 +47,14 @@
 }
 
 .navigation-buttons {
-  margin-top: 20px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   gap: 20px;
 }
 
 .restart-button {
-  margin-top: 20px;
+
   background-color: #BA68C8;
   padding: 10px 20px;
   font-size: 16px;
@@ -67,6 +67,55 @@
 .restart-button:hover {
   background-color: #9c27b0;
 }
+
+.back-button {
+
+  background-color: #BA68C8;
+  /* фіолетовий */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #9c27b0;
+}
+
+.next-button {
+
+  background-color: #66BB6A;
+  /* зелений */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.next-button:hover {
+  background-color: #43a047;
+}
+
+.finish-button {
+
+  background-color: #4CAF50;
+  /* інший зелений */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.finish-button:hover {
+  background-color: #388e3c;
+}
+
 
 .options-row {
   display: flex;
@@ -172,4 +221,23 @@
   height: 100%;
   background-color: #81C784;
   transition: width 0.3s ease-in-out;
+}
+
+.incomplete-warning {
+  position: relative;
+  display: inline-block;
+  /* по центру, знизу відступ */
+  padding: 8px 12px;
+  background-color: #f8d7da;
+  /* світло-рожевий фон */
+  color: #842029;
+  /* темно-червоний текст */
+  font-size: 0.9rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  max-width: 300px;
+  text-align: center;
+  font-weight: 500;
+  user-select: none;
+  z-index: 10;
 }

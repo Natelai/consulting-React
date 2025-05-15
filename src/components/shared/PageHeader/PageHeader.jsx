@@ -33,7 +33,7 @@ function PageHeader({ isAuthenticated, onLogout }) {
       </div>
 
       {/* Вкладки для десктопу */}
-      <div className="tabs">
+      <div style={{ marginLeft: '-70px' }} className="tabs">
         <button
           className={`tab ${activeTab === 'drayfus' ? 'active' : ''}`}
           onClick={() => handleTabClick('drayfus')}
@@ -44,7 +44,7 @@ function PageHeader({ isAuthenticated, onLogout }) {
           className={`tab ${activeTab === 'professional-characteristics' ? 'active' : ''}`}
           onClick={() => handleTabClick('professional-characteristics')}
         >
-          Тест професійних характеристик
+          Тест психофізіологічних характеристик
         </button>
         <button
           className={`tab ${activeTab === 'recommendations' ? 'active' : ''}`}
@@ -72,7 +72,7 @@ function PageHeader({ isAuthenticated, onLogout }) {
               className={`tab ${activeTab === 'professional-characteristics' ? 'active' : ''}`}
               onClick={() => handleTabClick('professional-characteristics')}
             >
-              Тест професійних характеристик
+              Тест психофізіологічних характеристик
             </button>
             <button
               className={`tab ${activeTab === 'recommendations' ? 'active' : ''}`}

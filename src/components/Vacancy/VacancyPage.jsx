@@ -41,6 +41,26 @@ const VacanciesPage = () => {
         return { text: "Експерт", color: "#f44336" };                            // Червоний
     };
 
+    const ExpertiseBadge = ({ totalScore }) => {
+        const { text, color } = getExpertiseLevel(totalScore);
+        return (
+            <span
+                style={{
+                    backgroundColor: color,
+                    color: 'white',
+                    padding: '4px 10px',
+                    borderRadius: '12px',
+                    fontWeight: '600',
+                    fontSize: '0.9rem',
+                    display: 'inline-block',
+                    minWidth: '100px',
+                    textAlign: 'center',
+                }}
+            >
+                {text}
+            </span>
+        );
+    };
 
     return (
         <div className="vacancies-container">
@@ -102,14 +122,50 @@ const VacanciesPage = () => {
                 <div className="modal-overlay" onClick={() => setSelectedVacancy(null)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
                         <button className="close-button" onClick={() => setSelectedVacancy(null)}>×</button>
+
                         <h2>{selectedVacancy.title}</h2>
+
+                        {/* Рівень експертності */}
+                        <div style={{ marginBottom: '10px' }}>
+                            <ExpertiseBadge totalScore={selectedVacancy.requiredDreyfusScore} />
+                        </div>
+
                         <p><strong>Відповідність:</strong> {selectedVacancy.matchPercentage.toFixed(1)}%</p>
                         <p>{selectedVacancy.description}</p>
+
+                        {/* Посилання на вакансію */}
+                        <p>
+                            <strong>Посилання на вакансію: </strong>
+                            <a href={selectedVacancy.link || '#'} target="_blank" rel="noopener noreferrer">
+                                {selectedVacancy.link ? selectedVacancy.link : 'Посилання буде додано пізніше'}
+                            </a>
+                        </p>
+
                         <h4>Необхідні риси:</h4>
-                        <ul>
-                            {selectedVacancy.requiredTraits.map((trait, i) => (
-                                <li key={i}>{trait.trait} — {trait.score}</li>
-                            ))}
+                        <ul className="required-traits-list">
+                            {selectedVacancy.requiredTraits.map((trait, i) => {
+                                const level = getExpertiseLevel(trait.score * 64); // Масштабування для кольору
+                                return (
+                                    <li key={i} className="trait-item">
+                                        <div
+                                            className="trait-badge"
+                                            style={{ backgroundColor: level.color }}
+                                        >
+                                            {trait.trait} — {(trait.score * 100).toFixed(0)}%
+                                            <div
+                                                className="trait-progress-bar"
+                                                style={{
+                                                    width: `${(trait.score * 100)}%`,
+                                                    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+                                                    height: '4px',
+                                                    marginTop: '4px',
+                                                    borderRadius: '2px',
+                                                }}
+                                            />
+                                        </div>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                 </div>

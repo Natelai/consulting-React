@@ -72,7 +72,8 @@ const DreyfusTestPage = () => {
     const payload = {
       userId,
       dreyfusScore: total,
-      careerTraits: []
+      careerTraits: [],
+      scoresByBlock
     };
 
     try {

@@ -104,6 +104,18 @@ const VacanciesPage = () => {
                                 onClick={() => setSelectedVacancy({ ...vacancy, matchPercentage })}
                             >
                                 <div className="vacancy-top-labels">
+                                    {vacancy.type && (
+                                        <span
+                                            className="type-badge"
+                                            style={{
+                                                backgroundColor: vacancy.type === 'Військова' ? '#357266' : '#755ad6',
+
+                                                color: 'white'
+                                            }}
+                                        >
+                                            {vacancy.type}
+                                        </span>
+                                    )}
                                     <span
                                         className="expertise-badge"
                                         style={{ backgroundColor: expertiseLevel.color }}
@@ -111,8 +123,7 @@ const VacanciesPage = () => {
                                         {expertiseLevel.text}
                                     </span>
 
-                                    {/* Placeholder для цивільна/військова плашки */}
-                                    {/* <span className="type-badge">Цивільна</span> */}
+
                                 </div>
 
                                 <div className="vacancy-header">
@@ -159,10 +170,12 @@ const VacanciesPage = () => {
 
                         {/* Посилання на вакансію */}
                         <p>
-                            <strong>Посилання на вакансію: </strong>
-                            <a href={selectedVacancy.link || '#'} target="_blank" rel="noopener noreferrer">
-                                {selectedVacancy.link ? selectedVacancy.link : 'Посилання буде додано пізніше'}
-                            </a>
+                            <button
+                                className="apply-button"
+                                onClick={() => window.open(selectedVacancy.link, '_blank', 'noopener,noreferrer')}
+                            >
+                                Відгукнутись на вакансію ✅
+                            </button>
                         </p>
 
                         <h4>Необхідні риси:</h4>

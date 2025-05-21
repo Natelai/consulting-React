@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faBars } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './PageHeader.css';
 import logo from '../../../logo.png';
 
 function PageHeader({ isAuthenticated, onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('drayfus');
+  const location = useLocation();
+  const currentPath = location.pathname.replace('/', ''); // отримаємо 'drayfus', 'recommendations' тощо
+
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -20,7 +22,6 @@ function PageHeader({ isAuthenticated, onLogout }) {
   };
 
   const handleTabClick = (tabName) => {
-    setActiveTab(tabName);
     navigate(`/${tabName}`);
     setMenuOpen(false);
   };
@@ -35,19 +36,19 @@ function PageHeader({ isAuthenticated, onLogout }) {
       {/* Вкладки для десктопу */}
       <div style={{ marginLeft: '-70px' }} className="tabs">
         <button
-          className={`tab ${activeTab === 'drayfus' ? 'active' : ''}`}
+          className={`tab ${currentPath === 'drayfus' ? 'active' : ''}`}
           onClick={() => handleTabClick('drayfus')}
         >
           Тест Дрейфус
         </button>
         <button
-          className={`tab ${activeTab === 'professional-characteristics' ? 'active' : ''}`}
+          className={`tab ${currentPath === 'professional-characteristics' ? 'active' : ''}`}
           onClick={() => handleTabClick('professional-characteristics')}
         >
           Тест психофізіологічних характеристик
         </button>
         <button
-          className={`tab ${activeTab === 'recommendations' ? 'active' : ''}`}
+          className={`tab ${currentPath === 'recommendations' ? 'active' : ''}`}
           onClick={() => handleTabClick('recommendations')}
         >
           Система рекомендацій
@@ -63,19 +64,19 @@ function PageHeader({ isAuthenticated, onLogout }) {
           {/* Вкладки для мобільного меню */}
           <div className="tabs-mobile">
             <button
-              className={`tab ${activeTab === 'drayfus' ? 'active' : ''}`}
+              className={`tab ${currentPath === 'drayfus' ? 'active' : ''}`}
               onClick={() => handleTabClick('drayfus')}
             >
               Тест Дрейфус
             </button>
             <button
-              className={`tab ${activeTab === 'professional-characteristics' ? 'active' : ''}`}
+              className={`tab ${currentPath === 'professional-characteristics' ? 'active' : ''}`}
               onClick={() => handleTabClick('professional-characteristics')}
             >
               Тест психофізіологічних характеристик
             </button>
             <button
-              className={`tab ${activeTab === 'recommendations' ? 'active' : ''}`}
+              className={`tab ${currentPath === 'recommendations' ? 'active' : ''}`}
               onClick={() => handleTabClick('recommendations')}
             >
               Система рекомендацій

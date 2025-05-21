@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './VacanciesPage.css';
 import { getUserIdFromToken } from '../../actions/auth.js';
+import { Link } from 'react-router-dom';
 
 const VacanciesPage = () => {
     const [vacancies, setVacancies] = useState([]);
@@ -16,10 +17,20 @@ const VacanciesPage = () => {
                         'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                     }
                 });
+
+                if (!res.ok) {
+                    if (res.status === 403) {
+                        throw new Error("Тести не пройдено");
+                    } else {
+                        throw new Error("Помилка при завантаженні вакансій");
+                    }
+                }
+
                 const data = await res.json();
                 setVacancies(data);
             } catch (err) {
                 console.error("Error fetching vacancies:", err);
+                setVacancies(null);
             }
         };
 
@@ -65,59 +76,83 @@ const VacanciesPage = () => {
     return (
         <div className="vacancies-container">
             <h2>Вакансії, що вам підходять</h2>
-            <div className="vacancy-grid">
-                {vacancies.map(({ vacancy, matchPercentage }) => {
-                    const topTraits = [...vacancy.requiredTraits]
-                        .sort((a, b) => b.score - a.score)
-                        .slice(0, 3);
+            {vacancies === null ? (
+                <Link to="/" className="no-vacancies-link">
+                    <div className="no-vacancies-container">
+                        <div className="no-vacancies-icon">🧪</div>
+                        <h3 className="no-vacancies-title">Рекомендацій поки немає</h3>
+                        <p className="no-vacancies-message">
+                            Щоб побачити вакансії, які вам найкраще підходять,<br />
+                            будь ласка, <strong>завершіть проходження всіх тестів</strong>
+                        </p>
+                        <span className="go-to-tests-button">На головну</span>
+                    </div>
+                </Link>
+            ) : (
+                <div className="vacancy-grid">
+                    {vacancies.map(({ vacancy, matchPercentage }) => {
+                        const topTraits = [...vacancy.requiredTraits]
+                            .sort((a, b) => b.score - a.score)
+                            .slice(0, 3);
 
-                    const expertiseLevel = getExpertiseLevel(vacancy.requiredDreyfusScore);
+                        const expertiseLevel = getExpertiseLevel(vacancy.requiredDreyfusScore);
 
-                    return (
-                        <div
-                            key={vacancy.id}
-                            className="vacancy-card"
-                            onClick={() => setSelectedVacancy({ ...vacancy, matchPercentage })}
-                        >
-                            <div className="vacancy-top-labels">
-                                <span
-                                    className="expertise-badge"
-                                    style={{ backgroundColor: expertiseLevel.color }}
-                                >
-                                    {expertiseLevel.text}
-                                </span>
+                        return (
+                            <div
+                                key={vacancy.id}
+                                className="vacancy-card"
+                                onClick={() => setSelectedVacancy({ ...vacancy, matchPercentage })}
+                            >
+                                <div className="vacancy-top-labels">
+                                    {vacancy.type && (
+                                        <span
+                                            className="type-badge"
+                                            style={{
+                                                backgroundColor: vacancy.type === 'Військова' ? '#357266' : '#755ad6',
 
-                                {/* Placeholder для цивільна/військова плашки */}
-                                {/* <span className="type-badge">Цивільна</span> */}
-                            </div>
+                                                color: 'white'
+                                            }}
+                                        >
+                                            {vacancy.type}
+                                        </span>
+                                    )}
+                                    <span
+                                        className="expertise-badge"
+                                        style={{ backgroundColor: expertiseLevel.color }}
+                                    >
+                                        {expertiseLevel.text}
+                                    </span>
 
-                            <div className="vacancy-header">
-                                <h3 className="vacancy-title">{vacancy.title}</h3>
-                                <div
-                                    className="match-percentage"
-                                    style={{
-                                        backgroundColor: getMatchColor(matchPercentage)
-                                    }}
-                                >
-                                    {matchPercentage.toFixed(1)}%
+
+                                </div>
+
+                                <div className="vacancy-header">
+                                    <h3 className="vacancy-title">{vacancy.title}</h3>
+                                    <div
+                                        className="match-percentage"
+                                        style={{
+                                            backgroundColor: getMatchColor(matchPercentage)
+                                        }}
+                                    >
+                                        {matchPercentage.toFixed(1)}%
+                                    </div>
+                                </div>
+
+                                <p className="short-desc">{vacancy.description.slice(0, 120)}...</p>
+
+                                <div className="skills-list">
+                                    {topTraits.map((trait, i) => (
+                                        <span key={i} className="skill">
+                                            {trait.trait}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
 
-                            <p className="short-desc">{vacancy.description.slice(0, 120)}...</p>
-
-                            <div className="skills-list">
-                                {topTraits.map((trait, i) => (
-                                    <span key={i} className="skill">
-                                        {trait.trait}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                    );
-                })}
-            </div>
-
+                        );
+                    })}
+                </div>
+            )}
             {selectedVacancy && (
                 <div className="modal-overlay" onClick={() => setSelectedVacancy(null)}>
                     <div className="modal-content" onClick={e => e.stopPropagation()}>
@@ -135,10 +170,12 @@ const VacanciesPage = () => {
 
                         {/* Посилання на вакансію */}
                         <p>
-                            <strong>Посилання на вакансію: </strong>
-                            <a href={selectedVacancy.link || '#'} target="_blank" rel="noopener noreferrer">
-                                {selectedVacancy.link ? selectedVacancy.link : 'Посилання буде додано пізніше'}
-                            </a>
+                            <button
+                                className="apply-button"
+                                onClick={() => window.open(selectedVacancy.link, '_blank', 'noopener,noreferrer')}
+                            >
+                                Відгукнутись на вакансію ✅
+                            </button>
                         </p>
 
                         <h4>Необхідні риси:</h4>
@@ -168,6 +205,7 @@ const VacanciesPage = () => {
                             })}
                         </ul>
                     </div>
+
                 </div>
             )}
         </div>

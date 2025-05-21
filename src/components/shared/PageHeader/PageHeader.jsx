@@ -84,7 +84,9 @@ function PageHeader({ isAuthenticated, onLogout }) {
 
           {isAuthenticated ? (
             <>
-              <FontAwesomeIcon icon={faUser} className="icon" title="Profile" />
+              <a href="/profile" title="Профіль">
+                <FontAwesomeIcon icon={faUser} className="icon" />
+              </a>
               <FontAwesomeIcon
                 icon={faSignOutAlt}
                 className="icon"

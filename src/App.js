@@ -13,6 +13,7 @@ import DreyfusTestPage from './components/DreyfusTest';
 import CareerTestPage from './components/MaxMinTest/CareerTest';
 import VacancyPage from './components/Vacancy/VacancyPage';
 import UserProfile from './components/UserProfile/UserProfile';
+import DreyfusTestInfoPage from './components/DreyfusTest/DreyfusTestInfoPage';
 
 import './App.css';
 
@@ -35,22 +36,27 @@ function MainApp() {
 
       <Routes>
   {/* Публічні сторінки */}
+  <Route path="/" element={      <HomePage />  } />
   <Route path="/login" element={<LoginPage />} />
   <Route path="/register" element={<RegisterPage />} />
   <Route path="/email-confirmation" element={<EmailConfirmationPage />} />
   <Route path="/resetRequest" element={<ResetRequestPage />} />
   <Route path="/reset" element={<ResetPasswordPage />} />
-  <Route path="/professional-characteristics" element={<CareerTestPage />} />
-  <Route path="/recommendations" element={<VacancyPage/>}/>
-  <Route path="/profile" element={<UserProfile/>}/>
+
   {/* Приватні сторінки */}
-  <Route path="/" element={
-    <ProtectedRoute>
-      <HomePage />
-    </ProtectedRoute>
-  } />
+  <Route path="/professional-characteristics" element={<ProtectedRoute><CareerTestPage /></ProtectedRoute>} />
+  <Route path="/recommendations" element={<ProtectedRoute><VacancyPage/></ProtectedRoute>}/>
+  <Route path="/profile" element={<UserProfile/>}/>
   <Route
-  path="/drayfus"
+  path="/dreyfus-info"
+  element={
+    <ProtectedRoute>
+      <DreyfusTestInfoPage />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/dreyfus"
   element={
     <ProtectedRoute>
       <DreyfusTestPage />

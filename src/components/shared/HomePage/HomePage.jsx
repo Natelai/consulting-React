@@ -19,9 +19,10 @@ const HomePage = () => {
     <div className="home-page">
       <section className="hero">
         <h1>Ласкаво просимо на <span className="highlight">Consulting Platform</span></h1>
-        <p>
-          Наша платформа допомагає кандидатам знайти свою ідеальну професійну роль через тести
-          компетентностей та рекомендаційні системи.
+        <p style={{ fontStyle: 'italic' }}>
+          Зробіть впевнений крок до кар'єри вашої мрії! </p>
+        <br></br>
+        <p>Наша платформа створена, щоб допомогти вам краще зрозуміти свої сильні сторони, визначити професійні схильності та знайти ідеальні вакансії, що відповідають вашим унікальним навичкам та інтересам.
         </p>
       </section>
 
@@ -29,7 +30,7 @@ const HomePage = () => {
         <div className="tile tile-blue">
           <h2>Тест Дрейфус</h2>
           <p>Оцініть рівень професіоналізму за моделлю братів Дрейфус.</p>
-          <button className="tile-button" onClick={() => handleTileClick('/drayfus')}>Перейти</button>
+          <button className="tile-button" onClick={() => handleTileClick('/dreyfus-info')}>Перейти</button>
         </div>
 
         <div className="tile tile-green">

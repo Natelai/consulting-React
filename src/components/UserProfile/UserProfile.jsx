@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './UserProfile.css';
-import { FaPen, FaSave } from 'react-icons/fa';
+import icon from './icon.jpeg';
 
 export default function UserProfile() {
   const [photoUrl, setPhotoUrl] = useState(null);
@@ -17,10 +17,10 @@ export default function UserProfile() {
 
   useEffect(() => {
     fetch('https://localhost:7100/profile', {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
-            'Content-Type': 'application/json'
-            },
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        'Content-Type': 'application/json'
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -47,7 +47,7 @@ export default function UserProfile() {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         'Content-Type': 'application/json'
-        },
+      },
       body: JSON.stringify(value),
     });
 
@@ -60,7 +60,7 @@ export default function UserProfile() {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
         'Content-Type': 'application/json'
-        },
+      },
       body: JSON.stringify(dob),
     });
     setIsEditingDob(false);
@@ -74,7 +74,7 @@ export default function UserProfile() {
     <div className="profile-full">
       <div className="profile-header">
         <img
-          src={photoUrl || defaultPhoto}
+          src={icon || defaultPhoto}
           alt="User"
           className="user-photo"
         />
@@ -88,20 +88,26 @@ export default function UserProfile() {
                     value={value}
                     onChange={(e) => handleNameChange(key, e.target.value)}
                   />
-                  <FaSave
+                  <span
                     className="edit-icon"
                     onClick={() => saveNameField(key)}
                     title="Зберегти"
-                  />
+                    style={{ cursor: 'pointer' }}
+                  >
+                    💾
+                  </span>
                 </>
               ) : (
                 <>
                   <span>{value}</span>
-                  <FaPen
+                  <span
                     className="edit-icon"
                     onClick={() => setEditingField(key)}
                     title="Редагувати"
-                  />
+                    style={{ cursor: 'pointer' }}
+                  >
+                    ✏️
+                  </span>
                 </>
               )}
             </div>
@@ -115,20 +121,26 @@ export default function UserProfile() {
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
                 />
-                <FaSave
+                <span
                   className="edit-icon"
                   onClick={saveDob}
                   title="Зберегти"
-                />
+                  style={{ cursor: 'pointer' }}
+                >
+                  💾
+                </span>
               </>
             ) : (
               <>
                 <span>Дата народження: {dob}</span>
-                <FaPen
+                <span
                   className="edit-icon"
                   onClick={() => setIsEditingDob(true)}
                   title="Редагувати"
-                />
+                  style={{ cursor: 'pointer' }}
+                >
+                  ✏️
+                </span>
               </>
             )}
           </div>

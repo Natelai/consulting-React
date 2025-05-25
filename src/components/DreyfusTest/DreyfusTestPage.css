@@ -241,3 +241,264 @@
   user-select: none;
   z-index: 10;
 }
+
+
+
+/* Загальні стилі для сторінки опису тесту */
+.testInfoPageContainer {
+  padding: 1rem 2rem 2rem 2rem;
+  /* Зменшив верхній падінг */
+  max-width: 900px;
+  /* Трохи збільшив для нового хедера */
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Стилі для нового хедера */
+.dreyfusPageHeader {
+  background: linear-gradient(white, #66BB6A);
+  /* Градієнт зверху вниз */
+  padding: 2rem;
+  border-radius: 12px;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #333;
+  /* Змінимо колір тексту, якщо фон стає світлим */
+}
+
+.headerMainTitle {
+  font-size: 1.8rem;
+  /* Розмір головного заголовка в хедері */
+  color: #333;
+  /* Темно-сірий для контрасту */
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+.headerInfoBlocksContainer {
+  display: flex;
+  justify-content: space-around;
+  /* Рівномірний розподіл */
+  align-items: flex-start;
+  /* Вирівнювання по верху */
+  gap: 1.5rem;
+  /* Проміжок між блоками */
+  flex-wrap: wrap;
+  /* Перенос блоків на новий рядок на малих екранах */
+}
+
+.infoBlock {
+  background: linear-gradient(#66BB6A, white);
+  /* Білий фон для блоків */
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  /* Тінь як у .question-card */
+  flex: 1;
+  /* Щоб блоки займали доступний простір */
+  min-width: 200px;
+  /* Мінімальна ширина блоку */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.infoBlockIcon {
+  font-size: 2.5rem;
+  /* Розмір іконок-емодзі */
+  margin-bottom: 0.75rem;
+  color: #66BB6A;
+  /* Зелений акцент з ваших стилів */
+}
+
+.infoBlock p {
+  font-size: 0.9rem;
+  color: #555;
+  /* Світліший сірий для тексту в блоках */
+  line-height: 1.5;
+  margin: 0;
+}
+
+
+/* Стилі для контенту опису (залишаються схожими) */
+.testDescriptionContent {
+  text-align: left;
+  line-height: 1.7;
+  color: #444;
+  padding: 1rem;
+  /* Додав падінг для секції опису */
+}
+
+.testDescriptionContent h2 {
+  font-size: 1.6rem;
+  color: #333;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid #e0e0e0;
+  /* Трохи темніша лінія */
+  padding-bottom: 0.5rem;
+  display: flex;
+  /* Для вирівнювання іконок-емодзі */
+  align-items: center;
+}
+
+
+.testDescriptionContent p {
+  margin-bottom: 1rem;
+}
+
+.testDescriptionContent ul,
+.testDescriptionContent ol {
+  margin-left: 0.5rem;
+  /* Зменшив відступ для списків */
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+  /* Внутрішній відступ для маркерів */
+}
+
+.testDescriptionContent li {
+  margin-bottom: 0.75rem;
+  padding-left: 0.5rem;
+  /* Невеликий відступ для тексту після маркера/емодзі */
+  list-style-type: none;
+  /* Прибираємо стандартні маркери */
+  position: relative;
+  /* Для позиціонування емодзі */
+}
+
+/* Додавання емодзі до пунктів списків */
+
+
+.testDescriptionContent ol li::before {
+  position: absolute;
+  left: -1.5rem;
+  /* Позиціонування емодзі для нумерованого списку */
+  top: 0.1em;
+  font-weight: bold;
+  /* Зробимо емодзі жирнішими, якщо це цифри або символи */
+}
+
+/* Якщо ви хочете цифри замість емодзі, але з кастомним стилем */
+/* .testDescriptionContent ol { counter-reset: listItem; }
+.testDescriptionContent ol li::before {
+    content: counter(listItem) ". ";
+    counter-increment: listItem;
+    position: absolute;
+    left: -1.5rem;
+    font-weight: bold;
+    color: #66BB6A;
+} */
+/* Емодзі для нумерованого списку інструкцій */
+
+
+.testDescriptionContent strong {
+  font-weight: 600;
+  color: #222;
+}
+
+.goodLuckMessage {
+  font-style: normal;
+  /* Зробив не курсивом для кращої читабельності з емодзі */
+  text-align: center;
+  margin-top: 2rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.actionButtonContainer {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e0e0e0;
+  /* Тонша лінія */
+}
+
+.startTestButton {
+  background-color: #66BB6A;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.startTestButton:hover {
+  background-color: #43a047;
+  transform: translateY(-1px);
+}
+
+.startTestButton:active {
+  transform: translateY(0px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Адаптивність для інфо-блоків */
+@media (max-width: 768px) {
+  .headerInfoBlocksContainer {
+    flex-direction: column;
+    /* Блоки один під одним на малих екранах */
+    align-items: center;
+    /* Центрування блоків */
+  }
+
+  .infoBlock {
+    width: 80%;
+    /* Блоки займають більшу ширину */
+    max-width: 350px;
+    /* Обмеження максимальної ширини */
+    margin-bottom: 1rem;
+    /* Відступ між блоками у стовпчик */
+  }
+
+  .headerMainTitle {
+    font-size: 1.5rem;
+  }
+
+  .testDescriptionContent h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .testInfoPageContainer {
+    padding: 1rem;
+  }
+
+  .dreyfusPageHeader {
+    padding: 1.5rem;
+  }
+
+  .headerMainTitle {
+    font-size: 1.3rem;
+  }
+
+  .infoBlock {
+    padding: 1rem;
+  }
+
+  .infoBlockIcon {
+    font-size: 2rem;
+  }
+
+  .infoBlock p {
+    font-size: 0.85rem;
+  }
+
+  .testDescriptionContent h2 {
+    font-size: 1.3rem;
+  }
+
+  .startTestButton {
+    font-size: 1rem;
+    padding: 10px 24px;
+  }
+}

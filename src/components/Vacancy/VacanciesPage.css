@@ -1,5 +1,5 @@
 .vacancies-container {
-    padding: 2rem;
+    padding: 0.5rem;
     text-align: center;
 }
 
@@ -232,4 +232,454 @@
     border-color: #4caf50;
     border: 2px solid;
     color: white;
+}
+
+/* ... ваші існуючі стилі ... */
+
+/* ... Ваші існуючі стилі для .vacancies-container, .vacancy-grid, .vacancy-card etc. ... */
+
+.filters-section {
+    display: flex;
+
+    flex-direction: column;
+    /* Розташовуємо ряди фільтрів і пошуку один під одним */
+    gap: 15px;
+    /* Проміжок між рядом фільтрів і рядом пошуку */
+    margin-bottom: 25px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.main-filters-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Дозволяє переносити фільтри на новий рядок */
+    justify-content: center;
+    /* Починаємо зліва */
+    align-items: center;
+    gap: 15px;
+    /* Проміжок між групами фільтрів у рядку */
+}
+
+.search-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    /* Для того, щоб поле пошуку могло зайняти всю ширину */
+}
+
+.filter-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Для поля пошуку, щоб воно займало всю доступну ширину в своєму рядку */
+.search-filter-full-width {
+    flex-grow: 1;
+}
+
+.search-input {
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    /* Важливо для width: 100% */
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #66BB6A;
+    box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
+}
+
+.type-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.type-pill {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #555;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    /* Щоб текст не переносився */
+}
+
+.type-pill.active {
+    background-color: var(--type-color, #66BB6A);
+    color: white;
+    border-color: var(--type-color, #66BB6A);
+}
+
+.type-pill:hover:not(.active) {
+    border-color: #aaa;
+}
+
+.filter-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    min-width: 180px;
+    /* Або інша ширина за потребою */
+    font-size: 0.95rem;
+    height: 38px;
+    /* Щоб висота була однакова з іншими елементами */
+    box-sizing: border-box;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #66BB6A;
+    box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
+}
+
+/* Стилі для кастомного дропдауну характеристик */
+.custom-dropdown-group {
+    position: relative;
+    /* Для позиціонування випадаючого списку */
+}
+
+.traits-dropdown-button {
+    /* Стилізуємо як .filter-select */
+    padding: 0 10px;
+    /* Падінг тільки з боків, текст і стрілка займають місце */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    min-width: 180px;
+    font-size: 0.95rem;
+    height: 38px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    /* Текст зліва, стрілка справа */
+    align-items: center;
+    text-align: left;
+    /* Вирівнювання тексту кнопки */
+    width: 100%;
+    /* Якщо потрібно, щоб кнопка займала ширину як select */
+}
+
+.traits-dropdown-button:focus {
+    outline: none;
+    border-color: #66BB6A;
+    box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
+}
+
+.dropdown-arrow {
+    font-size: 0.8em;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.traits-dropdown-list {
+    position: absolute;
+    top: 100%;
+    /* Відразу під кнопкою */
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    /* Щоб не було подвійної рамки з кнопкою */
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    /* Щоб був поверх інших елементів */
+    max-height: 200px;
+    /* Обмеження висоти, додає скрол */
+    overflow-y: auto;
+    min-width: 180px;
+    /* Така ж ширина, як у кнопки/селекта */
+    box-sizing: border-box;
+}
+
+.trait-checkbox-label {
+    display: block;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.trait-checkbox-label:hover {
+    background-color: #f0f0f0;
+}
+
+.trait-checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: left;
+    /* Вирівнювання чекбоксу і тексту */
+}
+
+/* Адаптивність для рядка фільтрів */
+@media (max-width: 768px) {
+    .main-filters-row {
+        flex-direction: column;
+        align-items: stretch;
+        /* Фільтри займають всю ширину */
+    }
+
+    .filter-group,
+    .custom-dropdown-group {
+        width: 100%;
+        /* Кожна група фільтрів на всю ширину */
+    }
+
+    .filter-select,
+    .traits-dropdown-button {
+        width: 100%;
+        /* Селекти та кнопка дропдауну на всю ширину */
+    }
+
+    .traits-dropdown-list {
+        width: 100%;
+        /* Список дропдауну також на всю ширину */
+    }
+
+    .type-filter {
+        justify-content: center;
+        /* Центрування плашок типів */
+    }
+}
+
+.traits-dropdown-button {
+    /* Стилізуємо як .filter-select */
+    padding: 0;
+    /* Прибираємо внутрішні падінги кнопки, бо тепер є span для тексту */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    min-width: 180px;
+    /* Або інша ширина за потребою */
+    font-size: 0.95rem;
+    height: 38px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    /* Для узгодження з іншими селектами в адаптивному режимі */
+    overflow: hidden;
+    /* Щоб довгий текст не вилазив */
+}
+
+.traits-dropdown-button-text {
+    padding-left: 10px;
+    /* Падінг для тексту всередині span */
+    white-space: nowrap;
+    /* Запобігаємо переносу тексту */
+    overflow: hidden;
+    /* Ховаємо текст, що не вміщається */
+    text-overflow: ellipsis;
+    /* Додаємо трикрапку для довгого тексту */
+    flex-grow: 1;
+    /* Дозволяємо тексту займати доступний простір */
+}
+
+.dropdown-arrow {
+    font-size: 0.8em;
+    padding-right: 10px;
+    /* Падінг для стрілки */
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    /* Щоб стрілка не стискалася */
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.trait-checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+    /* ВИПРАВЛЕННЯ: було left */
+}
+
+/* Стиль для trait-progress-bar, якщо він ще не визначений або потребує уточнення */
+/* .trait-progress-bar {
+    height: 4px;      // Можна задати тут, якщо не хочете inline
+    margin-top: 4px;  // Можна задати тут
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.7); // Колір за замовчуванням, якщо не задано inline
+} */
+
+.filter-select.traits-dropdown-button {
+    /* Додаємо .filter-select для наслідування базових стилів */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    padding: 0;
+    /* Прибираємо падінги, щоб span всередині контролював їх */
+    position: relative;
+    /* Якщо знадобиться для абсолютного позиціонування стрілки, хоча flex зараз справляється */
+    /* min-width та height успадковуються або задаються в .filter-select */
+}
+
+.traits-dropdown-button-text {
+    flex-grow: 1;
+    /* Дозволяє тексту займати доступний простір */
+    padding-left: 10px;
+    /* Відступ зліва для тексту */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Додає "..." якщо текст не вміщається */
+    color: #333;
+    /* Переконайтесь, що колір тексту видно */
+}
+
+.dropdown-arrow {
+    font-size: 0.8em;
+    padding-right: 10px;
+    /* Відступ справа для стрілки */
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    /* Стрілка не буде стискатися */
+    color: #555;
+    /* Колір стрілки */
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+.filter-select {
+    /* Залишаємо для оригінального select, якщо він десь ще використовується, або можна перейменувати */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    min-width: 180px;
+    font-size: 0.95rem;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #66BB6A;
+    box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
+}
+
+/* Загальні стилі для кнопок кастомних дропдаунів */
+.dropdown-button {
+    /* Наслідує стилі .filter-select для узгодженості */
+    padding: 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: white;
+    min-width: 250px;
+    font-size: 0.95rem;
+    height: 38px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    /* Займає всю ширину своєї filter-group */
+    overflow: hidden;
+}
+
+.dropdown-button:focus-within,
+/* Для доступності, коли фокус на кнопці */
+.dropdown-button:focus {
+    outline: none;
+    border-color: #66BB6A;
+    box-shadow: 0 0 0 2px rgba(102, 187, 106, 0.2);
+}
+
+.dropdown-button-text {
+    flex-grow: 1;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+}
+
+.dropdown-arrow {
+    font-size: 0.8em;
+    padding-right: 10px;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    color: #555;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+}
+
+/* Загальні стилі для випадаючих списків */
+.custom-dropdown-list {
+    position: absolute;
+    top: calc(100% + 2px);
+    /* Трохи нижче кнопки */
+    left: 0;
+    right: 0;
+    /* Розтягуємо на всю ширину батьківського .custom-dropdown-group */
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.custom-dropdown-item {
+    display: block;
+    /* Для <label> або <div> всередині */
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    color: #333;
+}
+
+.custom-dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.custom-dropdown-item.selected {
+    background-color: #e0f2f1;
+    /* Схоже на .skill */
+    font-weight: 500;
+    color: #00796b;
+}
+
+/* Специфічні стилі для списку характеристик (чекбокси) */
+.traits-dropdown-list {
+    /* Можна додати специфічні стилі, якщо потрібно */
+}
+
+.trait-checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
 }

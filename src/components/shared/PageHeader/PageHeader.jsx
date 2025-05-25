@@ -36,7 +36,7 @@ function PageHeader({ isAuthenticated, onLogout }) {
       {/* Вкладки для десктопу */}
       <div style={{ marginLeft: '-70px' }} className="tabs">
         <button
-          className={`tab ${currentPath === ('dreyfus' || 'dreyfus-info') ? 'active' : ''}`}
+          className={`tab ${currentPath === 'dreyfus' || currentPath === 'dreyfus-info' ? 'active' : ''}`}
           onClick={() => handleTabClick('dreyfus-info')}
         >
           Тест Дрейфус

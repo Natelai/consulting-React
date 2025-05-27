@@ -149,3 +149,138 @@
   opacity: 0.6;
   cursor: default;
 }
+
+/* ... ваші існуючі стилі для UserProfile.css ... */
+
+/* Стилі для модального вікна */
+.profile-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  /* Темніший фон */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Поверх інших елементів */
+}
+
+.profile-modal-content {
+  background: white;
+  padding: 25px 30px;
+  /* Трохи більше падінгу */
+  border-radius: 10px;
+  width: 90%;
+  max-width: 700px;
+  /* Збільшив максимальну ширину для кращого відображення результатів */
+  position: relative;
+  max-height: 85vh;
+  /* Трохи більша висота */
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.profile-modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  /* Збільшив розмір кнопки закриття */
+  font-weight: bold;
+  cursor: pointer;
+  color: #888;
+  /* Світліший колір для кнопки закриття */
+  padding: 5px;
+  line-height: 1;
+}
+
+.profile-modal-close-button:hover {
+  color: #333;
+}
+
+/* Стилі для вмісту результатів всередині модалки (схожі на DreyfusTestPage) */
+.results-modal-container {
+  /* Можна перейменувати, щоб уникнути конфлікту з .results-container */
+  display: flex;
+  align-items: flex-start;
+  /* Вирівнювання по верху для кращого компонування */
+  justify-content: center;
+  gap: 30px;
+  /* Зменшив gap */
+  flex-wrap: nowrap;
+  /* Щоб не переносилось, якщо достатньо місця */
+  /* Невеликий відступ зверху */
+}
+
+.results-modal-container .results-image {
+  /* Якщо потрібно специфічні стилі для модалки */
+  flex: 0 0 180px;
+  /* Трохи менше зображення в модалці */
+  text-align: center;
+}
+
+.results-modal-container .results-image img {
+  width: 100%;
+  /* Або фіксована ширина, наприклад, 180px */
+  max-width: 180px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.results-modal-container .results-content {
+  flex: 1;
+  max-width: none;
+  /* Дозволяємо зайняти доступний простір */
+  text-align: left;
+  /* Текст вирівнюємо по лівому краю */
+}
+
+.results-modal-container .results-content h2 {
+  font-size: 24px;
+  /* Трохи менший заголовок */
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.results-modal-container .results-content p {
+  font-size: 15px;
+  margin-top: 8px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.results-modal-container .level-description {
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
+  font-size: 14px;
+  /* Трохи менший опис */
+}
+
+.results-modal-container .chart-container {
+  margin-top: 20px;
+  /* Менший відступ для діаграми */
+  max-width: 100%;
+  /* Діаграма займає доступну ширину */
+}
+
+/* Стилі для полів редагування, якщо потрібно щось змінити */
+.editable-field input[type="text"],
+.editable-field input[type="date"] {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.editable-field .edit-icon {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 1.1em;
+  /* Розмір іконок редагування/збереження */
+}

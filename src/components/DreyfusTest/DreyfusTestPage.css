@@ -7,16 +7,280 @@
 .question-card {
   background: #ffffff;
   padding: 20px;
-  margin: 10px auto;
+  margin: 20px auto;
+  /* Збільшив вертикальний відступ */
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
+  text-align: center;
+  /* Для центрування зображення, якщо воно менше */
+}
+
+.question-card {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+
+  text-align: center;
+}
+
+/* Новий стиль для внутрішнього flex-контейнера */
+.question-card-inner {
+  display: flex;
+  align-items: flex-start;
+  /* Або center, якщо хочете вертикальне центрування */
+  gap: 20px;
+  /* Проміжок між зображенням та контентом */
+}
+
+/* Контейнер для зображення, щоб контролювати його розмір у flex-контейнері */
+.question-image-container {
+  flex: 0 0 150px;
+  /* Фіксована ширина для зображення, не розтягується, не стискається. Змініть за потребою. */
+  /* Або можна використати відсотки, наприклад: flex: 0 0 30%; */
+  display: flex;
+  /* Для центрування зображення, якщо воно менше контейнера */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Стилі для самого бічного зображення */
+.question-image-side {
+  max-width: 100%;
+  /* Займає всю ширину свого контейнера */
+  max-height: 200px;
+  /* Обмеження висоти, щоб не було занадто великим */
+  height: auto;
+  border-radius: 6px;
+  object-fit: contain;
+  /* Або cover, залежно від того, як ви хочете, щоб зображення вписувалося */
+}
+
+/* Контейнер для тексту питання та варіантів відповідей */
+.question-content-container {
+  flex: 1;
+  /* Займає решту доступного простору */
+  text-align: center;
+  /* Текст питання та варіанти вирівнюються по лівому краю */
+}
+
+.question-card p {
+  /* Стилі для тексту питання залишаються */
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: center;
+  /* Залишаємо, хоча тепер це контролюється батьківським .question-content-container */
+}
+
+.options-row {
+  display: flex;
+  justify-content: center;
+  /* Опції починаються зліва */
+  gap: 20px;
+  /* Зменшив gap для бічного розташування */
+  margin-top: 12px;
+  flex-wrap: wrap;
+  /* Дозволяє переносити опції, якщо їх багато */
+}
+
+@media (max-width: 600px) {
+
+  /* Налаштуйте поріг за потребою */
+  .question-card-inner {
+    flex-direction: column;
+    /* Зображення зверху, контент знизу */
+    align-items: center;
+    /* Центруємо зображення */
+  }
+
+  .question-image-container {
+    flex-basis: auto;
+    /* Скидаємо фіксовану ширину */
+    width: 80%;
+    /* Наприклад, зображення займає 80% ширини картки */
+    margin-bottom: 15px;
+    /* Додаємо відступ під зображенням */
+  }
+
+  .question-image-side {
+    max-height: 180px;
+    /* Можна трохи зменшити для мобільних */
+  }
+
+  .question-content-container {
+    width: 100%;
+    /* Контент займає всю ширину картки */
+    text-align: center;
+    /* Можна центрувати текст та опції на мобільних */
+  }
+
+  .question-card p {
+    text-align: center;
+    /* Центрування тексту питання на мобільних */
+  }
+
+  .options-row {
+    justify-content: center;
+    /* Центрування опцій на мобільних */
+  }
+}
+
+.question-image {
+  max-width: 140px;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fade-in {
+  animation: fadeInAnimation 0.5s ease-in-out;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .question-card p {
   font-size: 18px;
   margin-bottom: 12px;
+  text-align: center;
   font-weight: 600;
+}
+
+.question-card {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  text-align: center;
+}
+
+/* Новий стиль для внутрішнього flex-контейнера */
+.question-card-inner {
+  display: flex;
+  align-items: center;
+  /* Або center, якщо хочете вертикальне центрування */
+  gap: 20px;
+  /* Проміжок між зображенням та контентом */
+}
+
+/* Контейнер для зображення, щоб контролювати його розмір у flex-контейнері */
+.question-image-container {
+  flex: 0 0 150px;
+  /* Фіксована ширина для зображення, не розтягується, не стискається. Змініть за потребою. */
+  /* Або можна використати відсотки, наприклад: flex: 0 0 30%; */
+  display: flex;
+  /* Для центрування зображення, якщо воно менше контейнера */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Стилі для самого бічного зображення */
+.question-image-side {
+  max-width: 100%;
+  /* Займає всю ширину свого контейнера */
+  max-height: 200px;
+  /* Обмеження висоти, щоб не було занадто великим */
+  height: auto;
+  border-radius: 6px;
+  object-fit: contain;
+  /* Або cover, залежно від того, як ви хочете, щоб зображення вписувалося */
+}
+
+/* Контейнер для тексту питання та варіантів відповідей */
+.question-content-container {
+  flex: 1;
+  /* Займає решту доступного простору */
+  /* text-align: left; -- Прибираємо або залишаємо, якщо опції теж мають бути зліва */
+  display: flex;
+  /* Додаємо flex для кращого контролю над дочірними елементами */
+  flex-direction: column;
+  /* Розташовуємо текст питання та опції один під одним */
+  align-items: center;
+  /* Центруємо дочірні елементи (текст питання, блок опцій) по горизонталі */
+}
+
+.question-card p {
+  /* Стилі для тексту питання залишаються */
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  text-align: left;
+  /* Залишаємо, хоча тепер це контролюється батьківським .question-content-container */
+}
+
+.options-row {
+  display: flex;
+  /* justify-content: center; -- Тепер може бути не потрібно, якщо текст зліва */
+  justify-content: flex-start;
+  /* Опції починаються зліва */
+  gap: 20px;
+  /* Зменшив gap для бічного розташування */
+  margin-top: 12px;
+  flex-wrap: wrap;
+  /* Дозволяє переносити опції, якщо їх багато */
+}
+
+/* ... (решта ваших стилів для .option-circle, .circle, анімацій і т.д.) ... */
+
+/* Адаптивність: на малих екранах можна повернути зображення над текстом */
+@media (max-width: 600px) {
+
+  /* Налаштуйте поріг за потребою */
+  .question-card-inner {
+    flex-direction: column;
+    /* Зображення зверху, контент знизу */
+    align-items: center;
+    /* Центруємо зображення */
+  }
+
+  .question-image-container {
+    flex-basis: auto;
+    /* Скидаємо фіксовану ширину */
+    width: 80%;
+    /* Наприклад, зображення займає 80% ширини картки */
+    margin-bottom: 15px;
+    /* Додаємо відступ під зображенням */
+  }
+
+  .question-image-side {
+    max-height: 180px;
+    /* Можна трохи зменшити для мобільних */
+  }
+
+  .question-content-container {
+    width: 100%;
+    /* Контент займає всю ширину картки */
+    text-align: center;
+    /* Можна центрувати текст та опції на мобільних */
+  }
+
+  .question-card p {
+    text-align: center;
+    /* Центрування тексту питання на мобільних */
+  }
+
+  .options-row {
+    justify-content: center;
+    /* Центрування опцій на мобільних */
+  }
 }
 
 .option-circle {

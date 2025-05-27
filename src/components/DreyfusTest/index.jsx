@@ -174,30 +174,57 @@ const DreyfusTestPage = () => {
       </div>
 
       <h2>{blockTitles[currentBlock]}</h2>
-      {questionsData[currentBlock].map(q => (
-        <div key={q.id} className="question-card fade-in">
-          <p>{q.question}</p>
-          <div className="options-row">
-            {q.options.map(opt => (
-              <label
-                key={opt.label}
-                className={`option-circle ${answers[q.id] === opt.label ? 'selected' : ''}`}
-              >
-                <input
-                  type="radio"
-                  name={q.id}
-                  value={opt.label}
-                  checked={answers[q.id] === opt.label}
-                  onChange={() => handleAnswer(q.id, opt.label)}
-                  style={{ display: 'none' }}
-                />
-                <div className="circle" />
-                <span>{opt.label}</span>
-              </label>
-            ))}
+      {questionsData[currentBlock].map(q => {
+        let questionImageSrc = null;
+        try {
+          // Припускаємо, що ID питання (q.id) це, наприклад, "q1", "q2" і т.д.
+          // і файли зображень називаються q1.png, q2.png...
+          // Шлях відносний до поточного файлу компонента
+          questionImageSrc = require(`./testimages/${q.id}.PNG`);
+        } catch (e) {
+          // Якщо зображення для питання не знайдено, нічого страшного
+          // console.warn(`Image not found for question <span class="math-inline">\{q\.id\} at \./testimages/</span>{q.id}.png`);
+        }
+
+        return (
+          <div key={q.id} className="question-card fade-in">
+            {/* Новий контейнер для гнучкого розташування зображення та контенту */}
+            <div className="question-card-inner">
+              {questionImageSrc && (
+                <div className="question-image-container"> {/* Окремий контейнер для зображення */}
+                  <img
+                    src={questionImageSrc}
+                    alt={`Ілюстрація до питання ${q.id}`}
+                    className="question-image-side" /* Новий клас для бічного зображення */
+                  />
+                </div>
+              )}
+              <div className="question-content-container"> {/* Контейнер для тексту питання та опцій */}
+                <p>{q.question}</p>
+                <div className="options-row">
+                  {q.options.map(opt => (
+                    <label
+                      key={opt.label}
+                      className={`option-circle ${answers[q.id] === opt.label ? 'selected' : ''}`}
+                    >
+                      <input
+                        type="radio"
+                        name={q.id}
+                        value={opt.label}
+                        checked={answers[q.id] === opt.label}
+                        onChange={() => handleAnswer(q.id, opt.label)}
+                        style={{ display: 'none' }}
+                      />
+                      <div className="circle" />
+                      <span>{opt.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {showIncompleteWarning && (
         <div className="incomplete-warning" style={{ marginTop: '0.5rem', textAlign: 'center' }}>

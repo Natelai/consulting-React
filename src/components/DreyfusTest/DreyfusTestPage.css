@@ -168,7 +168,7 @@
   margin: 20px auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px;
+  max-width: 800px;
   text-align: center;
 }
 
@@ -222,7 +222,6 @@
   font-size: 18px;
   margin-bottom: 15px;
   font-weight: 600;
-  text-align: left;
   /* Залишаємо, хоча тепер це контролюється батьківським .question-content-container */
 }
 
@@ -383,7 +382,7 @@
 
 .options-row {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 40px;
   margin-top: 12px;
 }

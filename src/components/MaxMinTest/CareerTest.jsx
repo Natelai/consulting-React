@@ -2,52 +2,57 @@ import React, { useState } from "react";
 import questionsData from "./questionsData";
 import { getUserIdFromToken } from '../../actions/auth.js';
 import './CareerTestPage.css';
+import { professionRequirements } from "./questionsData";
 
 const CareerTestPage = () => {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [showResults, setShowResults] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState({});
+  const [modalTitle, setModalTitle] = useState("");
 
   const handleAnswerChange = (questionId, value) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
   };
 
-  // Перевіряємо, чи відповіли на всі питання
   const allAnswered = questionsData.every(q => answers[q.id] != null);
 
   const handleSubmit = async () => {
-    if (!allAnswered) {
-      // Можна додати ще повідомлення або вібрацію
-      return;
-    }
+    if (!allAnswered) return;
 
-    const traitScores = {};
-    const traitCounts = {};
+    const traitScores = { military: {}, civil: {} };
+    const traitCounts = { military: {}, civil: {} };
 
     questionsData.forEach((question) => {
-      const answerValue = answers[question.id];
-      if (answerValue != null) {
-        question.relatedTraits.forEach((trait) => {
-          traitScores[trait] = (traitScores[trait] || 0) + answerValue;
-          traitCounts[trait] = (traitCounts[trait] || 0) + 1;
+      const value = answers[question.id];
+      if (value != null) {
+        ["military", "civil"].forEach(domain => {
+          const weights = question.weights[domain];
+          if (!weights) return;
+
+          Object.entries(weights).forEach(([trait, weight]) => {
+            traitScores[domain][trait] = (traitScores[domain][trait] || 0) + weight * value;
+            traitCounts[domain][trait] = (traitCounts[domain][trait] || 0) + Math.abs(weight);
+          });
         });
       }
     });
 
-    const traitAverages = {};
-    for (const trait in traitScores) {
-      traitAverages[trait] = traitScores[trait] / traitCounts[trait];
-    }
+    const traitAverages = { military: {}, civil: {} };
+    ["military", "civil"].forEach(domain => {
+      Object.keys(traitScores[domain]).forEach(trait => {
+        traitAverages[domain][trait] = traitCounts[domain][trait] > 0
+          ? parseFloat((traitScores[domain][trait] / traitCounts[domain][trait]).toFixed(2))
+          : 0;
+      });
+    });
 
     const userId = getUserIdFromToken();
-
     const payload = {
       userId,
       dreyfusScore: 0,
-      careerTraits: Object.entries(traitAverages).map(([trait, score]) => ({
-        trait,
-        score: parseFloat(score.toFixed(2))
-      }))
+      careerTraits: traitAverages
     };
 
     try {
@@ -63,9 +68,85 @@ const CareerTestPage = () => {
       console.error('Error saving career traits:', error);
     }
 
+    const maxMinComposition = (userVector, professionMatrix) => {
+      const result = {};
+      Object.entries(professionMatrix).forEach(([profession, traits]) => {
+        const mins = Object.entries(traits).map(([trait, req]) => {
+          const userVal = userVector[trait] ?? 0;
+          return Math.min(userVal, req);
+        });
+        result[profession] = parseFloat((Math.max(...mins)).toFixed(2));
+      });
+      return result;
+    };
+
+    const militaryMatches = maxMinComposition(traitAverages.military, professionRequirements.military);
+    const civilMatches = maxMinComposition(traitAverages.civil, professionRequirements.civil);
+
+    traitAverages.militaryMatches = militaryMatches;
+    traitAverages.civilMatches = civilMatches;
+
     setResult(traitAverages);
     setShowResults(true);
   };
+
+  const renderResultTable = (title, data) => (
+    <div className="results-table-block">
+      <h3>{title}</h3>
+      <table className="results-table styled">
+        <thead>
+          <tr>
+            <th>Характеристика / Професія</th>
+            <th>Оцінка (0 – 1)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(data).sort((a, b) => b[1] - a[1]).map(([trait, score], idx) => (
+            <tr key={idx} className={score > 0.8 ? 'highlight-high' : score < 0.4 ? 'highlight-low' : ''}>
+              <td>{trait}</td>
+              <td>{score.toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+
+  const openModal = (type) => {
+    setModalTitle(type === "military" ? "Матриця військових професій" : "Матриця цивільних професій");
+    setModalContent(professionRequirements[type]);
+    setShowModal(true);
+  };
+
+  const renderMatrixModal = () => (
+    <div className="modal-overlay" onClick={() => setShowModal(false)}>
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <h2>{modalTitle}</h2>
+        {Object.entries(modalContent).map(([profession, traits], i) => (
+          <div key={i} style={{ marginBottom: '16px' }}>
+            <h4>{profession}</h4>
+            <table className="results-table styled">
+              <thead>
+                <tr>
+                  <th>Характеристика</th>
+                  <th>Вага</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(traits).map(([trait, weight], j) => (
+                  <tr key={j}>
+                    <td>{trait}</td>
+                    <td>{weight.toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ))}
+        <button className="close-button" onClick={() => setShowModal(false)}>Закрити</button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="test-page">
@@ -94,14 +175,11 @@ const CareerTestPage = () => {
 
       {!showResults && (
         <div>
-          <div>
-            {!allAnswered && (
-              <div className="incomplete-warning" style={{ marginTop: '8px', textAlign: 'center' }}>
-                Будь ласка, виберіть відповіді на всі питання перед завершенням тесту.
-              </div>
-            )}
-
-          </div>
+          {!allAnswered && (
+            <div className="incomplete-warning" style={{ marginTop: '8px', textAlign: 'center' }}>
+              Будь ласка, виберіть відповіді на всі питання перед завершенням тесту.
+            </div>
+          )}
           <div className="navigation-buttons" style={{ position: 'relative' }}>
             <button
               onClick={handleSubmit}
@@ -110,36 +188,29 @@ const CareerTestPage = () => {
             >
               Завершити тест і переглянути результати
             </button>
-
           </div>
         </div>
       )}
 
       {showResults && result && (
-        <div className="results-page">
-          <h2 className="results-title">Ваш профіль характеристик:</h2>
-          <div className="results-grid">
-            {Object.entries(result).map(([trait, score], idx) => {
-              const percentage = Math.round(score * 100);
-              const color = `hsl(${percentage * 1.2}, 70%, 50%)`;
-
-              return (
-                <div key={idx} className="result-card">
-                  <h3 className="trait-name">{trait}</h3>
-                  <p className="trait-score">Оцінка: <strong>{percentage}%</strong></p>
-                  <div className="progress-bar-background">
-                    <div
-                      className="progress-bar-fill"
-                      style={{ width: `${percentage}%`, backgroundColor: color }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
+        <>
+          <div className="results-columns">
+            {renderResultTable("Військові характеристики", result.military)}
+            {renderResultTable("Цивільні характеристики", result.civil)}
           </div>
-        </div>
+          <div className="results-columns">
+            <div style={{ position: 'relative' }}>
+              <button className="info-button" onClick={() => openModal("military")}>ℹ️</button>
+              {renderResultTable("Відповідність військовим професіям", result.militaryMatches)}
+            </div>
+            <div style={{ position: 'relative' }}>
+              <button className="info-button" onClick={() => openModal("civil")}>ℹ️</button>
+              {renderResultTable("Відповідність цивільним професіям", result.civilMatches)}
+            </div>
+          </div>
+          {showModal && renderMatrixModal()}
+        </>
       )}
-
     </div>
   );
 };

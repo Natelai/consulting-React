@@ -73,3 +73,33 @@
     user-select: none;
     z-index: 10;
 }
+
+.results-table.styled {
+  width: 50%;
+  border-collapse: collapse;
+}
+.results-table.styled th, .results-table.styled td {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+}
+.results-table.styled tr.highlight-high {
+  background-color: #d1fae5; /* зелений */
+}
+.results-table.styled tr.highlight-low {
+  background-color: #fee2e2; /* червоний */
+}
+.results-table-block h3 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  color: #374151;
+}
+
+.info-button{
+    background-color: white;
+    padding: 0;
+}
+
+.modal-content{
+    max-width: 800px;
+}
+

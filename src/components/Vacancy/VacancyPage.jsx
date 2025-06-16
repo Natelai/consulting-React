@@ -60,8 +60,8 @@ const VacanciesPage = () => {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('authToken')}` }
                 });
                 if (!res.ok) {
-                    if (res.status === 403) throw new Error("Тести не пройдено");
-                    else throw new Error(`Помилка ${res.status} при завантаженні вакансій`);
+                    throw new Error("Тести не пройдено");
+
                 }
                 const data = await res.json();
                 setAllVacancies(data);
@@ -159,7 +159,7 @@ const VacanciesPage = () => {
         <div className="vacancies-container">
             <Link to="/dreyfus-info" className="no-vacancies-link">
                 <div className="no-vacancies-container">
-                    <div className="no-vacancies-icon">🧪</div>
+                    <div className="no-vacancies-icon">📝</div>
                     <h3 className="no-vacancies-title">Рекомендацій поки немає</h3>
                     <p className="no-vacancies-message">Щоб побачити вакансії, які вам найкраще підходять,<br />будь ласка, <strong>завершіть проходження всіх тестів</strong>.</p>
                     <span className="go-to-tests-button">Пройти тести</span>

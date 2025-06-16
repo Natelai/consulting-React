@@ -14,6 +14,7 @@ import CareerTestPage from './components/MaxMinTest/CareerTest';
 import VacancyPage from './components/Vacancy/VacancyPage';
 import UserProfile from './components/UserProfile/UserProfile';
 import DreyfusTestInfoPage from './components/DreyfusTest/DreyfusTestInfoPage';
+import RecruiterDashboardPage from './components/Recruiter/RecruiterDashboardPage';
 
 import './App.css';
 
@@ -63,7 +64,16 @@ function MainApp() {
     </ProtectedRoute>
   }
 />
-</Routes>
+<Route
+          path="/recruiter-dashboard"
+          element={
+
+              <RecruiterDashboardPage />
+
+          }
+        />
+      </Routes>
+
     </div>
   );
 }
